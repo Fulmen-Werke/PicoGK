@@ -6,7 +6,22 @@ The C++ source lives in a separate repository: https://github.com/leap71/PicoGKR
 
 ---
 
-## Prerequisites
+## Using a pre-built binary (Fedora only)
+
+The `native/linux-x64/libpicogk.1.7.so` included in this repo was compiled on **Fedora 44**. It is dynamically linked against Fedora-versioned system libraries. On Fedora you can clone this repo, install the runtime dependencies below, and go — no compiler needed.
+
+```bash
+sudo dnf install -y tbb blosc lz4 libzstd zlib boost-iostreams boost-regex snappy
+dotnet build
+```
+
+On other distributions (Ubuntu, Debian, Arch, etc.) the shared library version numbers will differ and the included binary will fail to load. In that case, follow the full build steps below to compile a native binary for your distro.
+
+---
+
+## Full build: compile from source
+
+### Prerequisites
 
 Tested on: **Fedora 44, x86_64, GCC 16, .NET SDK 9.0**
 
@@ -25,9 +40,7 @@ sudo dnf install -y \
 
 > **Note:** The Viewer component requires a display with OpenGL (X11 or Wayland). For headless geometry work, use the `Library` headless constructor — `Library.Go()` requires a display.
 
----
-
-## 1. Clone and build PicoGKRuntime
+### 1. Clone and build PicoGKRuntime
 
 ```bash
 git clone --recursive https://github.com/leap71/PicoGKRuntime
@@ -42,20 +55,14 @@ The compiled library is produced at:
 build/lib/picogk.so
 ```
 
----
-
-## 2. Add the library to PicoGK
-
-Copy the compiled library into the `native/linux-x64/` directory of this repository, renaming it to match the versioned name expected by the DllImport declarations:
+### 2. Replace the library in PicoGK
 
 ```bash
-mkdir -p native/linux-x64
-cp /path/to/PicoGKRuntime/build/lib/picogk.so native/linux-x64/libpicogk.1.7.so
+cp /path/to/PicoGKRuntime/build/lib/picogk.so \
+   /path/to/PicoGK/native/linux-x64/libpicogk.1.7.so
 ```
 
----
-
-## 3. Build and verify
+### 3. Build and verify
 
 ```bash
 dotnet build
