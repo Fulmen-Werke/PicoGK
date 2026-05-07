@@ -171,7 +171,7 @@ namespace PicoGK
                     Log($"-- Could not initialize PicoGK Library --");
                     Log($"-----------------------------------------");
                     Log($"Most likely cause is that the PicoGK runtime library wasn't found");
-                    Log($"Make sure {Config.strPicoGKLib}.dylib/.dll is accessible and has execution rights.");
+                    Log($"Make sure {Config.strPicoGKLib}.so/.dylib/.dll is accessible and has execution rights.");
                     Log($"See PicoGK documentation on GitHub for troubleshooting info");
                     Log($"Terribly long error string follows (usually devoid of real information):");
                     Log($"--------------------------------");
@@ -416,7 +416,7 @@ namespace PicoGK
 
             catch (Exception)
             {
-                throw new Exception($"Failed to load PicoGK Runtime. Make sure the PicoGK Runtime is installed and {Config.strPicoGKLib}.dylib/.dll is accessible and has execution rights.\n");
+                throw new Exception($"Failed to load PicoGK Runtime. Make sure the PicoGK Runtime is installed and {Config.strPicoGKLib}.so/.dylib/.dll is accessible and has execution rights.\n");
             }
         }
 
